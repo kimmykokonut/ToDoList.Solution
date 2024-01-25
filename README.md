@@ -1,6 +1,6 @@
 ## Diagram of routes, controllers, views
 
-![Diagram](./ToDoList/wwwroot/images/ToDoListActions%20.png)
+![Diagram](./ToDoList/wwwroot/img/ToDoListActions%20.png)
 
 ## What Is This?
 
