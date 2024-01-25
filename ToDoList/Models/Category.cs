@@ -16,5 +16,9 @@ namespace ToDoList.Models
       Id = _instances.Count;
       Items = new List<Item>{}; //new empty List to eventually contain Item objecst that belong to cat.
     }
+    public static void ClearAll()
+    {
+      _instances.Clear();
+    }
   }
 }
