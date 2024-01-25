@@ -34,6 +34,8 @@ namespace ToDoList.Controllers
       model.Add("items", categoryItems);
       return View(model);
     }
+
+    // This one creates new Items within a given Category, not new Categories:
     [HttpPost("/categories/{categoryId}/items")] //moved over from ItemsController, now obj w/in obj
     public ActionResult Create(int categoryId, string itemDescription)
     {
