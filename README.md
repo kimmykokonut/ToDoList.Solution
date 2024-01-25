@@ -1,3 +1,7 @@
+## Diagram of routes, controllers, views
+
+![Diagram](./ToDoList/wwwroot/images/ToDoListActions%20.png)
+
 ## What Is This?
 
 This is an example repo corresponding to multiple lessons within the LearnHowToProgram.com walkthrough on creating a To Do List application in [Section 2: Basic Web Applications](https://www.learnhowtoprogram.com/c-and-net/basic-web-applications).
