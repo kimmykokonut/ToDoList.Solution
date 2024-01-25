@@ -2,6 +2,10 @@
 
 ![Diagram](./ToDoList/wwwroot/img/ToDoListActions%20.png)
 
+further exploration:
+* add link to photo route?
+* add delete category list functionality
+
 ## What Is This?
 
 This is an example repo corresponding to multiple lessons within the LearnHowToProgram.com walkthrough on creating a To Do List application in [Section 2: Basic Web Applications](https://www.learnhowtoprogram.com/c-and-net/basic-web-applications).
