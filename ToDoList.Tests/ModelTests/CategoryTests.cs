@@ -44,5 +44,21 @@ namespace ToDoList.Tests
       //Assert
       Assert.AreEqual(1, result);
     }
+    [TestMethod]
+    public void GetAll_ReturnsAllCategoryObjects_CategoryList()
+    {
+      //Arrange
+      string name01 = "Work";
+      string name02 = "School";
+      Category newCategory1 = new Category(name01);
+      Category newCategory2 = new Category(name02);
+      List<Category> newList = new List<Category> { newCategory1, newCategory2 };
+
+      //Act
+      List<Category> result = Category.GetAll();
+
+      //Assert
+      CollectionAssert.AreEqual(newList, result);
+    }
   }
 }
