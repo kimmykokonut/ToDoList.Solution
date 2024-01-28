@@ -26,8 +26,9 @@ namespace ToDoList.Models
       else
       {
         Item newItem = (Item) otherItem; //type cast to ensure otheritem is an Item
+        bool idEquality = (this.Id == newItem.Id);
         bool descriptionEquality = (this.Description == newItem.Description);
-        return descriptionEquality;
+        return (idEquality && descriptionEquality);
       }
     }
     public override int GetHashCode()
