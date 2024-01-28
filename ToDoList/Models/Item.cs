@@ -6,7 +6,7 @@ namespace ToDoList.Models
   public class Item
   {
     public string Description { get; set; }
-    public int Id { get; } //don't need set b/c set automatically in constructor
+    public int Id { get; } 
 
     public Item(string description)
     {
@@ -17,6 +17,46 @@ namespace ToDoList.Models
       Description = description;
       Id = id;
     }
+    public override bool Equals(System.Object otherItem)
+    {
+      if (!(otherItem is Item)) //makes sure its Item obj
+      {
+        return false;
+      }
+      else
+      {
+        Item newItem = (Item) otherItem; //type cast to ensure otheritem is an Item
+        bool descriptionEquality = (this.Description == newItem.Description);
+        return descriptionEquality;
+      }
+    }
+    public override int GetHashCode()
+    {
+      return Id.GetHashCode();
+    }
+    public void Save()
+    {
+      MySqlConnection conn = new MySqlConnection(DBConfiguration.ConnectionString);
+      conn.Open();
+
+      MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
+
+      cmd.CommandText = "INSERT INTO items (description) VALUES (@ItemDescription);";
+      //passing MySqlParameter Object into SqlCommand
+      MySqlParameter param = new MySqlParameter();
+      param.ParameterName = "@ItemDescription";
+      param.Value = this.Description; //refers auto-impl. property Description
+      cmd.Parameters.Add(param);
+      cmd.ExecuteNonQuery(); //will save row in db.
+      //Id = cmd.LastInsertedId;
+
+      conn.Close();
+      if (conn != null)
+      {
+        conn.Dispose();
+      }
+    }
+
     public static List<Item> GetAll()
     {
       List<Item> allItems = new List<Item> { };
