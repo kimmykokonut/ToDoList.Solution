@@ -45,7 +45,18 @@ namespace ToDoList.Models
     }
     public static void ClearAll()
     {
-      
+      MySqlConnection conn = new MySqlConnection(DBConfiguration.ConnectionString); //create conn object
+      conn.Open(); //opens db connection
+
+      MySqlCommand cmd = conn.CreateCommand() as MySqlCommand; //create new command obj.
+      cmd.CommandText = "DELETE FROM items;"; //sql command
+      cmd.ExecuteNonQuery(); //modify data (not query/return data)
+
+      conn.Close();
+      if (conn != null)
+      {
+        conn.Dispose(); //destroy if not closed correctly
+      }
     }
     public static Item Find(int searchId)
     {
