@@ -92,21 +92,24 @@ namespace ToDoList.Tests
     // {
     //   string description = "Walk the dog.";
     //   Item newItem = new Item(description);
+    //   newItem.Save();
     //   int result = newItem.Id;
-    //   Assert.AreEqual(1, result);
+    //   Assert.AreEqual(1, result); //fail. expected 1 actual 12.
     // }
-    // [TestMethod]
-    // public void Find_ReturnsCorrectItem_Item()
-    // {
-    //   //Arrange
-    //   string description01 = "Walk the dog.";
-    //   string description02 = "Wash the dishes";
-    //   Item newItem1 = new Item(description01);
-    //   Item newItem2 = new Item(description02);
-    //   //Act
-    //   Item result = Item.Find(2);
-    //   //Assert
-    //   Assert.AreEqual(newItem2, result);
-    // }
+    [TestMethod]
+    public void Find_ReturnsCorrectItemFromDb_Item()
+    {
+      //Arrange
+      string description01 = "Walk the dog.";
+      string description02 = "Wash the dishes";
+      Item newItem1 = new Item(description01);
+      newItem1.Save();
+      Item newItem2 = new Item(description02);
+      newItem2.Save();
+      //Act
+      Item result = Item.Find(newItem1.Id);
+      //Assert
+      Assert.AreEqual(newItem1, result);
+    }
   }
 }

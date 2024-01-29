@@ -99,11 +99,36 @@ namespace ToDoList.Models
         conn.Dispose(); //destroy if not closed correctly
       }
     }
-    public static Item Find(int searchId)
+    public static Item Find(int id)
     {
-      Item placeholderItem = new Item("placeholder item");
-      return placeholderItem;
+      //open connection
+      MySqlConnection conn = new MySqlConnection(DBConfiguration.ConnectionString);
+      conn.Open();
+      //create msc obj and add query to its c.txt prop. Always need to do
+      MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText = "SELECT * FROM items WHERE id = @ThisId;";
+      //use param placeholder&msp obj to prevent sql inj. attacks-only necessary when passing param into query
+      MySqlParameter param = new MySqlParameter();
+      param.ParameterName = "@ThisId";
+      param.Value = id;
+      cmd.Parameters.Add(param);
+      //use exe.reader b/c query returning results
+      MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
+      int itemId = 0;
+      string itemDescription = ""; // incase find doesn't return a result
+      while (rdr.Read())
+      {
+        itemId = rdr.GetInt32(0);
+        itemDescription = rdr.GetString(1);
+      }
+      Item foundItem = new Item(itemDescription, itemId);
+      //close connection
+      conn.Close();
+      if (conn != null)
+      {
+        conn.Dispose();
+      }
+      return foundItem;
     }
-    
   }
 }
