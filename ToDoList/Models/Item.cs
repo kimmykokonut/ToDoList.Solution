@@ -6,7 +6,7 @@ namespace ToDoList.Models
   public class Item
   {
     public string Description { get; set; }
-    public int Id { get; set; } 
+    public int ItemId { get; set; } 
 
     public Item(string description)
     {
@@ -15,7 +15,7 @@ namespace ToDoList.Models
     public Item(string description, int id)
     {
       Description = description;
-      Id = id;
+      ItemId = id;
     }
     public override bool Equals(System.Object otherItem)
     {
@@ -26,14 +26,14 @@ namespace ToDoList.Models
       else
       {
         Item newItem = (Item) otherItem; //type cast to ensure otheritem is an Item
-        bool idEquality = (this.Id == newItem.Id);
+        bool idEquality = (this.ItemId == newItem.ItemId);
         bool descriptionEquality = (this.Description == newItem.Description);
         return (idEquality && descriptionEquality);
       }
     }
     public override int GetHashCode()
     {
-      return Id.GetHashCode();
+      return ItemId.GetHashCode();
     }
     public void Save()
     {
@@ -49,7 +49,7 @@ namespace ToDoList.Models
       param.Value = this.Description; //refers auto-impl. property Description
       cmd.Parameters.Add(param);
       cmd.ExecuteNonQuery(); //will save row in db.
-      Id = (int) cmd.LastInsertedId; //explicit cast b/c db returns 'long' not 'int'
+      ItemId = (int) cmd.LastInsertedId; //explicit cast b/c db returns 'long' not 'int'
 
       conn.Close();
       if (conn != null)
