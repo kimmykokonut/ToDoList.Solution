@@ -19,6 +19,18 @@ namespace ToDoList.Controllers
       List<Item> model = _db.Items.ToList(); //replaces getall() uses linq
       return View(model);
     }
+    //[HttpGet]
+    public ActionResult Create() //replaces the New()
+    {
+      return View();
+    }
+    [HttpPost]
+    public ActionResult Create(Item item)
+    {
+      _db.Items.Add(item);
+      _db.SaveChanges();
+      return RedirectToAction("Index");
+    }
     // [HttpGet("/categories/{categoryId}/items/new")]
     // public ActionResult New(int categoryId)
     // {
