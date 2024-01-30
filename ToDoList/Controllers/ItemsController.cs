@@ -31,13 +31,20 @@ namespace ToDoList.Controllers
       _db.SaveChanges();
       return RedirectToAction("Index");
     }
+    public ActionResult Details(int id) //id match param from actionlink in index.
+    {
+      Item thisItem = _db.Items.FirstOrDefault(item => item.ItemId == id);
+      return View(thisItem);
+    }
+    //line 36 same code: Item thisItem = _db.Items.FirstOrDefault(thing => thing.ItemId == id);
+    
     // [HttpGet("/categories/{categoryId}/items/new")]
     // public ActionResult New(int categoryId)
     // {
     //   Category category = Category.Find(categoryId);
     //   return View(category);
     // }
-    
+
     // [HttpGet("/categories/{categoryId}/items/{itemId}")]
     // public ActionResult Show(int categoryId, int itemId)
     // {
