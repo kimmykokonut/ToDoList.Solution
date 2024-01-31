@@ -2,7 +2,8 @@ using System.Collections.Generic;
 using System;
 using Microsoft.AspNetCore.Mvc;
 using ToDoList.Models;
-using Sytem.Linq;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace ToDoList.Controllers
 {
@@ -25,13 +26,16 @@ namespace ToDoList.Controllers
     [HttpPost]
     public ActionResult Create(Category category)
     {
-      _db.Categories.Add(item);
+      _db.Categories.Add(category);
       _db.SaveChanges();
       return RedirectToAction("Index");
     }
     public ActionResult Details(int id)
     {
-      Category thisCategory = _db.Categories.FirstOrDefault(category => category.CategoryId == id);
+      Category thisCategory = _db.Categories
+      .Include(category => category.Items) //want to incl. items prop
+      .FirstOrDefault(category => category.CategoryId == id);
+      return View(thisCategory);
     }
     public ActionResult Edit(int id)
     {
@@ -48,9 +52,9 @@ namespace ToDoList.Controllers
     public ActionResult Delete(int id)
     {
       Category thisCategory = _db.Categories.FirstOrDefault(category => category.CategoryId == id);
-      return View(thisItem);
+      return View(thisCategory);
     }
-    [HttpPost ActionName("Delete")]
+    [HttpPost, ActionName("Delete")]
     public ActionResult DeleteCofirmed(int id)
     {
       Category thisCategory = _db.Categories.FirstOrDefault(category => category.CategoryId == id);
