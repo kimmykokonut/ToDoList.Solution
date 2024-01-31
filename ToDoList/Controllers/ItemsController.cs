@@ -49,5 +49,18 @@ namespace ToDoList.Controllers
       _db.SaveChanges();
       return RedirectToAction("Index");
     }
+    public ActionResult Delete(int id)
+    { //gets item from db return to view
+      Item thisItem = _db.Items.FirstOrDefault(item => item.ItemId == id);
+      return View(thisItem);
+    }
+    [HttpPost, ActionName("Delete")] //need this b/c both get/post take id as parameter. c# no allow two method w/same signature.
+    public ActionResult DeleteConfirmed(int id)
+    {
+      Item thisItem = _db.Items.FirstOrDefault(item => item.ItemId == id);
+      _db.Items.Remove(thisItem);
+      _db.SaveChanges();
+      return RedirectToAction("Index");
+    }
   }
 }
