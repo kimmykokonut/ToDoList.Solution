@@ -37,23 +37,17 @@ namespace ToDoList.Controllers
       return View(thisItem);
     }
     //line 36 same code: Item thisItem = _db.Items.FirstOrDefault(thing => thing.ItemId == id);
-    
-    // [HttpGet("/categories/{categoryId}/items/new")]
-    // public ActionResult New(int categoryId)
-    // {
-    //   Category category = Category.Find(categoryId);
-    //   return View(category);
-    // }
-
-    // [HttpGet("/categories/{categoryId}/items/{itemId}")]
-    // public ActionResult Show(int categoryId, int itemId)
-    // {
-    //   Item item = Item.Find(itemId);
-    //   Category category = Category.Find(categoryId);
-    //   Dictionary<string, object> model = new Dictionary<string, object>();
-    //   model.Add("item", item);
-    //   model.Add("category", category);
-    //   return View(model); //passed cat&item id to view in dictionary
-    // }
+    public ActionResult Edit(int id)
+    {
+      Item thisItem = _db.Items.FirstOrDefault(item => item.ItemId == id);
+      return View(thisItem);
+    }
+    [HttpPost]
+    public ActionResult Edit(Item item)
+    {
+      _db.Items.Update(item);
+      _db.SaveChanges();
+      return RedirectToAction("Index");
+    }
   }
 }
