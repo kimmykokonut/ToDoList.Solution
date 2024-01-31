@@ -15,6 +15,9 @@
   @Html.LabelFor(model => model.Description)
   @Html.EditorFor(model => model.Description)
 
+  @Html.LabelFor(model => model.Category) //cat to associate item with
+  @Html.DropDownList("CategoryId")
+
   <input type="submit" value="Save" /> //button. text='save'
 }
 <p>@Html.ActionLink("Back to list", "Index")</p>
