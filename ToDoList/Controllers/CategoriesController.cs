@@ -34,6 +34,8 @@ namespace ToDoList.Controllers
     {
       Category thisCategory = _db.Categories
       .Include(category => category.Items) //want to incl. items prop
+      .ThenInclude(item => item.JoinEntities)
+      .ThenInclude(join => join.Tag)
       .FirstOrDefault(category => category.CategoryId == id);
       return View(thisCategory);
     }
