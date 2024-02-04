@@ -18,7 +18,7 @@ public class TagsController : Controller
   {
     return View(_db.Tags.ToList());
   }
-  public ActionResult Detail(int id)
+  public ActionResult Details(int id)
   {
     Tag thisTag = _db.Tags
       .Include(tag => tag.JoinEntities) //load JE prop of ea Tag (not actual item objects related to Tag. ItemTag is ref. to relationship, incl. id of Tag and id of Item)
