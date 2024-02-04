@@ -48,5 +48,12 @@ public class TagsController : Controller
   {
     #nullable enable
     ItemTag? joinEntity = _db.ItemTags.FirstOrDefault(join => (join.ItemId == itemId && join.TagId == tag.TagId));
+    #nullable disable
+    if (joinEntity == null && itemId != 0)
+    {
+      _db.ItemTags.Add(new ItemTag() { ItemId = itemId, TagId = tag.TagId });
+      _db.SaveChanges();
+    }
+    return RedirectToAction("Details", new { id = tag.TagId });
   }
 }
