@@ -26,4 +26,15 @@ public class TagsController : Controller
       .FirstOrDefault(tag => tag.TagId == id);
     return View(thisTag);
   }
+  public ActionResult Create()
+  {
+    return View();
+  }
+  [HttpPost]
+  public ActionResult Create(Tag tag)
+  {
+    _db.Tags.Add(tag);
+    _db.SaveChanges();
+    return RedirectToAction("Index");
+  }
 }
