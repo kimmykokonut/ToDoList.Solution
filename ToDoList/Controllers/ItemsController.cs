@@ -44,6 +44,8 @@ namespace ToDoList.Controllers
     {
       Item thisItem = _db.Items
       .Include(item => item.Category)
+      .Include(item => item.JoinEntities) //fetch join.ent
+      .ThenInclude(join => join.Tag) //fetch tag object
       .FirstOrDefault(item => item.ItemId == id);
       return View(thisItem);
     }

@@ -18,4 +18,12 @@ public class TagsController : Controller
   {
     return View(_db.Tags.ToList());
   }
+  public ActionResult Detail(int id)
+  {
+    Tag thisTag = _db.Tags
+      .Include(tag => tag.JoinEntities) //load JE prop of ea Tag (not actual item objects related to Tag. ItemTag is ref. to relationship, incl. id of Tag and id of Item)
+      .ThenInclude(join => join.Item) //actual Item objects ass'd w/ItemTag
+      .FirstOrDefault(tag => tag.TagId == id);
+    return View(thisTag);
+  }
 }
