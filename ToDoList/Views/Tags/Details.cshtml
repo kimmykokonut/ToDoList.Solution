@@ -19,9 +19,15 @@ else
     @foreach(ItemTag join in Model.JoinEntities)
     {
       <li>@join.Item.Description</li>
+      @using (Html.BeginForm("DeleteJoin", "Tags"))
+      {
+        @Html.Hidden("joinId", @join.ItemTagId)
+        <input type="submit" value="Delete" />
+      }
     }
   </ul>
 }
 <p>@Html.ActionLink("Add an item", "AddItem", new { id = Model.TagId })</p>
 <p>@Html.ActionLink("Back to list", "Index")</p>
 <p>@Html.ActionLink("Edit Tag", "Edit", new { id = Model.TagId})</p>
+<p>@Html.ActionLink("Delete Tag","Delete", new { id = Model.TagId })</p>

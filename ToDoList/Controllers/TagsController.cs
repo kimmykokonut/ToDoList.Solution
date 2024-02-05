@@ -81,4 +81,12 @@ public class TagsController : Controller
     _db.SaveChanges();
     return RedirectToAction("Index");
   }
+  [HttpPost]
+  public ActionResult DeleteJoin(int joinId)
+  {
+    ItemTag joinEntry = _db.ItemTags.FirstOrDefault(entry => entry.ItemTagId == joinId);
+    _db.ItemTags.Remove(joinId);
+    _db.SaveChanges();
+    return RedirectToAction("Index");
+  }
 }
