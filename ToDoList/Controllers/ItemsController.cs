@@ -95,5 +95,13 @@ namespace ToDoList.Controllers
       }
       return RedirectToAction("Details", new { id = item.ItemId });
     }
+    [HttpPost]
+    public ActionResult DeleteJoin(int joinId)
+    {
+      ItemTag joinEntry = _db.ItemTags.FirstOrDefault(entry => entry.ItemTagId == joinId);
+      _db.ItemTags.Remove(joinEntry);
+      _db.SaveChanges();
+      return RedirectToAction("Index");
+    }
   }
 }

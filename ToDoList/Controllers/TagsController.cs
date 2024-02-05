@@ -68,7 +68,7 @@ public class TagsController : Controller
     _db.SaveChanges();
     return RedirectToAction("Index");
   }
-  public ActionResult Delete (int id)
+  public ActionResult Delete(int id)
   {
     Tag thisTag = _db.Tags.FirstOrDefault(tags => tags.TagId == id);
     return View(thisTag);
@@ -85,7 +85,7 @@ public class TagsController : Controller
   public ActionResult DeleteJoin(int joinId)
   {
     ItemTag joinEntry = _db.ItemTags.FirstOrDefault(entry => entry.ItemTagId == joinId);
-    _db.ItemTags.Remove(joinId);
+    _db.ItemTags.Remove(joinEntry);
     _db.SaveChanges();
     return RedirectToAction("Index");
   }
