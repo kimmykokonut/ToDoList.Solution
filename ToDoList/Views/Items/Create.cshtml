@@ -17,9 +17,13 @@
   @Html.LabelFor(model => model.Description)
   @Html.TextBoxFor(model => model.Description) //for new item
 
+  //hidden checkbox here?
+
   @Html.LabelFor(model => model.Category) //dropdown cat. names
   @Html.DropDownList("CategoryId")
 
   <input type="submit" value="Add new item" class="btn btn-primary"/>
 }
+<br />
+<p>@Html.ActionLink("Add category", "Create", "Categories")</p>
 <p>@Html.ActionLink("Show all items", "Index")</p>

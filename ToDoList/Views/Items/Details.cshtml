@@ -7,7 +7,15 @@
 <h2>Item Details</h2>
 <hr />
 <h3>@Html.DisplayNameFor(model => model.Description): @Html.DisplayFor(model => model.Description)</h3>
+@* // *@
+@using (Html.BeginForm("UpdateCompleteStatus", "ItemsController", FormMethod.Post))
+{
+  @Html.CheckBoxFor(model => model.isComplete, new { id = "isCompleteCheckbox" })
+  @Html.LabelFor(model => model.isComplete, "Completed")
+}
+@* // *@
 <h3>@Html.DisplayNameFor(model => model.Category): @Html.DisplayFor(model => model.Category.Name)</h3>
+
 
 @if(@Model.JoinEntities.Count == 0)
 {

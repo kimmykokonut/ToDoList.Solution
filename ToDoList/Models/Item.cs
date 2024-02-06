@@ -12,6 +12,6 @@ namespace ToDoList.Models
     public int CategoryId { get; set; } //foregin key in items db
     public Category Category { get; set; } //nav prop creates 1:many
     public List<ItemTag> JoinEntities { get; } //collection nav prop.
-
+    public bool isComplete { get; set; } = false;
   }
 }
