@@ -32,9 +32,10 @@ namespace ToDoList.Controllers
     [HttpPost]
     public ActionResult Create(Item item)
     {
-      if (item.CategoryId == 0)
+      if (!ModelState.IsValid) //model validation don't want categoryId to =0/not exist. ea item Needs a category.
       {
-        return RedirectToAction("Create");
+        ViewBag.CategoryId = new SelectList(_db.Categories, "CategoryId", "Name");
+        return View(item);
       }
       _db.Items.Add(item);
       _db.SaveChanges();
