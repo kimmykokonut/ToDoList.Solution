@@ -104,5 +104,12 @@ namespace ToDoList.Controllers
       _db.SaveChanges();
       return RedirectToAction("Index");
     }
+    public ActionResult MarkAsComplete(int id)
+    {
+      Item thisItem = _db.Items.FirstOrDefault(items => items.ItemId == id);
+      thisItem.isComplete = true;
+      _db.SaveChanges();
+      return RedirectToAction("Details", new { id = id });
+    }
   }
 }

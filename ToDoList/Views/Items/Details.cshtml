@@ -8,16 +8,28 @@
 <hr />
 <h3>@Html.DisplayNameFor(model => model.Description): @Html.DisplayFor(model => model.Description)</h3>
 @* // *@
-@using (Html.BeginForm("UpdateCompleteStatus", "ItemsController", FormMethod.Post))
+<hr />
+@if (Model.isComplete)
 {
-  @Html.CheckBoxFor(model => model.isComplete, new { id = "isCompleteCheckbox" })
-  @Html.LabelFor(model => model.isComplete, "Completed")
+  <h3>Status: Completed</h3>
 }
-@* // *@
+else
+{
+  <div id="notWatched">
+  <h3>Status: Not completed</h3>
+
+  @using (Html.BeginForm("MarkAsComplete", "Items", new { id = Model.ItemId }))
+    {
+      <label>Mark as </label>
+      <input type="submit" value="complete" />
+    }
+  </div>
+}
+<hr />
 <h3>@Html.DisplayNameFor(model => model.Category): @Html.DisplayFor(model => model.Category.Name)</h3>
 
 
-@if(@Model.JoinEntities.Count == 0)
+@if (@Model.JoinEntities.Count == 0)
 {
   <p>This item does not have any tags yet!</p>
 }
@@ -25,7 +37,7 @@ else
 {
   <h4>This item has the following tags:</h4>
   <ul>
-    @foreach(ItemTag join in Model.JoinEntities)
+  @foreach (ItemTag join in Model.JoinEntities)
     {
       <li>Tag: @join.Tag.Title</li>
       @using (Html.BeginForm("DeleteJoin", "Items"))
@@ -39,7 +51,7 @@ else
 
 
 <p>@Html.ActionLink("Back to list", "Index")</p>
- @* edit link, specify looking for itemid of model passed in this view *@
+@* edit link, specify looking for itemid of model passed in this view *@
 <p>@Html.ActionLink("Edit Item", "Edit", new { id = Model.ItemId })</p>
 <p>@Html.ActionLink("Delete Item", "Delete", new { id = Model.ItemId })</p>
 <p>@Html.ActionLink("Add a Tag", "AddTag", new { id = Model.ItemId })</p>

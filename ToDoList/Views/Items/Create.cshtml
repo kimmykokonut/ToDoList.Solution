@@ -16,9 +16,7 @@
 {
   @Html.LabelFor(model => model.Description)
   @Html.TextBoxFor(model => model.Description) //for new item
-
-  //hidden checkbox here?
-
+  <br />
   @Html.LabelFor(model => model.Category) //dropdown cat. names
   @Html.DropDownList("CategoryId")
 
