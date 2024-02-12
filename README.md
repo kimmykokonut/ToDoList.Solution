@@ -4,7 +4,11 @@
 
 further exploration:
 * add link to photo route?
-* add delete category list functionality
+
+todo 2/6/24-----
+-added item as completed button but it's not a checkbox as requeted. i dont see a way to make a checkbox a post request. only a button to change the boolean in the db.
+-allow users to assign due dates for items
+-sort items by due dates (linq OrderBy)
 
 ## What Is This?
 
