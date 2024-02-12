@@ -4,42 +4,58 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using System.Threading.Tasks;
+using System.Security.Claims;
 
 namespace ToDoList.Controllers
 {
+  [Authorize]
   public class ItemsController : Controller
   {
     //hold db connection as todoliscontext type
     private readonly ToDoListContext _db;
+    private readonly UserManager<ApplicationUser> _userManager;
 
-    public ItemsController(ToDoListContext db) //passed as arg thru dependency injection. this arg is same todolistcontext setup as service in program.cs
+    public ItemsController(UserManager<ApplicationUser> userManager, ToDoListContext db) //passed as arg thru dependency injection. this arg is same todolistcontext setup as service in program.cs
     {
+      _userManager = userManager;
       _db = db; //set value of _db prop to Todolistocntext dbl.
     }
-    public ActionResult Index()
+    public async Task<ActionResult> Index()
     {
-      List<Item> model = _db.Items
+      string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+      ApplicationUser currentUser = await _userManager.FindByIdAsync(userId);
+      List<Item> userItems = _db.Items
+              .Where(entry => entry.User.Id == currentUser.Id)
               .Include(item => item.Category) //includes category w/item
               .ToList(); //replaces getall() uses linq
-      return View(model);
+      return View(userItems);
     }
-    //[HttpGet]
     public ActionResult Create() //replaces the New()
     {
       ViewBag.CategoryId = new SelectList(_db.Categories, "CategoryId", "Name"); //selectlist provides data needed to create html sleect of all categories from db.
       return View();
     }
     [HttpPost]
-    public ActionResult Create(Item item)
+    public async Task<ActionResult> Create(Item item, int CategoryId)
     {
       if (!ModelState.IsValid) //model validation don't want categoryId to =0/not exist. ea item Needs a category.
       {
         ViewBag.CategoryId = new SelectList(_db.Categories, "CategoryId", "Name");
         return View(item);
       }
-      _db.Items.Add(item);
-      _db.SaveChanges();
-      return RedirectToAction("Index");
+      else
+      {
+        string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        ApplicationUser currentUser = await _userManager.FindByIdAsync(userId);
+        item.User = currentUser;
+        _db.Items.Add(item);
+        _db.SaveChanges();
+        return RedirectToAction("Index");
+      }
+      
     }
     public ActionResult Details(int id) //id match param from actionlink in index.
     {

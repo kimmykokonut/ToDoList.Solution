@@ -13,5 +13,6 @@ namespace ToDoList.Models
     public Category Category { get; set; } //nav prop creates 1:many
     public List<ItemTag> JoinEntities { get; } //collection nav prop.
     public bool isComplete { get; set; } = false;
+    public ApplicationUser User { get; set; }
   }
 }
