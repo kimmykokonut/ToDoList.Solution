@@ -6,13 +6,13 @@ using ToDoList.ViewModels;
 
 namespace ToDoList.Controllers;
 
-public class AccountController : Controller 
+public class AccountController : Controller
 {
   private readonly ToDoListContext _db;
   private readonly UserManager<ApplicationUser> _userManager;
   private readonly SignInManager<ApplicationUser> _signInManager;
 
-  public AccountController (UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, ToDoListContext db)
+  public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, ToDoListContext db)
   {
     _userManager = userManager;
     _signInManager = signInManager;
@@ -27,7 +27,7 @@ public class AccountController : Controller
     return View();
   }
   [HttpPost]
-  public async Task<ActionResult> Register (RegisterViewModel model)
+  public async Task<ActionResult> Register(RegisterViewModel model)
   {
     if (!ModelState.IsValid)
     {
@@ -74,7 +74,12 @@ public class AccountController : Controller
         ModelState.AddModelError("", "There is something wrong with your email or username. Please try again.");
         return View(model);
       }
-      
     }
+  }
+  [HttpPost]
+  public async Task<ActionResult> LogOff()
+  {
+    await _signInManager.SignOutAsync();
+    return RedirectToAction("Index");
   }
 }
